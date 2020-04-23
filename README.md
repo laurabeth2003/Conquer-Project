@@ -1,3 +1,13 @@
+'''
+#Programmer: Laura Erickson and Ty Regehr
+
+#Program Name: finalProject.py
+
+#Created on: 4/21/2020
+
+#Last edited: 4/23/2020
+'''
+
 import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import ImageTk, Image
