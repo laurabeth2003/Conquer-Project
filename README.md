@@ -7,7 +7,6 @@
 
 #Last edited: 4/23/2020
 '''
-
 import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import ImageTk, Image
@@ -16,15 +15,69 @@ import database as db
 class screendesign():
     def __init__(self):
         def screen2():
+            def backtomain():
+                root2.destroy()
+                screendesign()
+                
+            def search():
+                def contin():
+                    ttk.Label(root2, text = "How many guests?", font = ("Ariel", 16)).place(height = 30, width = 200, x = 50, y = (i*35 + 105))
+                    ttk.Button(root2, text = "1", command = root2.destroy).place(height = 30, width = 100, x = 250, y = (i*35 + 105))
+                    ttk.Button(root2, text = "2", command = root2.destroy).place(height = 30, width = 100, x = 375, y = (i*35 + 105))
+                    
+                ttk.Label(root2).place(height = 370, width = 700, x = 0, y = 70)
+                namelist = name.get()
+                namelist = namelist.split()
+                if (len(namelist) == 1): 
+                    query = "SELECT memberFirstName, memberLastName, memberID FROM member WHERE memberFirstName = ?"
+                    rows = db.read_table_1condition(db.create_connection(db.data), query, (namelist[0],))
+                    i = 0
+                    ttk.Label(root2, width=80, text= "First name").place(height = 30, width = 200, x = 50, y = 70)
+                    ttk.Label(root2, width=80, text= "Last name").place(height = 30, width = 200, x = 250, y = 70)
+                    ttk.Label(root2, width=80, text= "Member ID").place(height = 30, width = 200, x = 450, y = 70)
+                    ttk.Label(root2, width=80, text= "Member?").place(height = 30, width = 200, x = 600, y = 70)
+                    for row in rows:
+                        i += 1
+                        rowlist = list(row)
+                        ttk.Label(root2, text = (str(i) + ".")).place(height = 30, width = 40, x = 10, y = (i*35 + 70))
+                        ttk.Label(root2, text= rowlist[0]).place(height = 30, width = 200, x = 50, y = (i*35 + 70))
+                        ttk.Label(root2, text= rowlist[1]).place(height = 30, width = 200, x = 250, y = (i*35 + 70))
+                        ttk.Label(root2, text= rowlist[2]).place(height = 30, width = 150, x = 450, y = (i*35 + 70))
+                        ttk.Button(root2, text = "Yes", command = contin).place(height = 30, width = 45, x = 600, y = (i*35 + 70))
+            
+                else:
+                    query = "SELECT memberFirstName, memberLastName, memberID FROM member WHERE (memberFirstName = ? AND memberLastName = ?)"
+                    rows = db.read_table_2condition(db.create_connection(db.data), query, namelist[0], namelist[1])
+                    i = 1
+                    ttk.Label(root2, width=80, text= "First name").place(height = 30, width = 200, x = 50, y = 70)
+                    ttk.Label(root2, width=80, text= "Last name").place(height = 30, width = 200, x = 250, y = 70)
+                    ttk.Label(root2, width=80, text= "Member ID").place(height = 30, width = 200, x = 450, y = 70)
+                    ttk.Label(root2, width=80, text= "Member?").place(height = 30, width = 200, x = 600, y = 70)
+                    for row in rows:
+                        rowlist = list(row)
+                        ttk.Label(root2, text = (str(i) + ".")).place(height = 30, width = 40, x = 10, y = (i*35 + 70))
+                        ttk.Label(root2, text= rowlist[0]).place(height = 30, width = 200, x = 50, y = (i*35 + 70))
+                        ttk.Label(root2, text= rowlist[1]).place(height = 30, width = 200, x = 250, y = (i*35 + 70))
+                        ttk.Label(root2, text= rowlist[2]).place(height = 30, width = 150, x = 450, y = (i*35 + 70))
+                        ttk.Button(root2, text = "Yes", command = contin).place(height = 30, width = 45, x = 600, y = (i*35 + 70))
+            
+                        i += 1
+            
             root.destroy()
             root2 = tk.Tk()
             root2.title("Add Guest Pass")
             root2.geometry("700x400")
             ttk.Button(root2, text = "Exit Program", command = root2.destroy).place(height = 30, width = 100, x = 10, y = 0)
-            ttk.Button(root2, text = "Back to Menu", command = screendesign).place(height = 30, width = 100, x = 600, y = 0)
+            ttk.Button(root2, text = "Back to Menu", command = backtomain).place(height = 30, width = 100, x = 590, y = 0)
+            ttk.Label(root2, text = "Add Guest Pass", font=("Ariel", 18)).place(height= 30, width = 300, x = 265, y = 0)
+            ttk.Label(root2, text = "Enter member name:", font = ("Ariel", 14)).place(height = 30, width = 200, x = 10, y = 35)
+            name = tk.StringVar()
+            ttk.Entry(root2, textvariable=name).place(height = 30, width = 350, x= 220, y = 35)
+            ttk.Button(root2, text = "Search", command = search).place(height = 30, width = 100, x = 590, y = 35)
             root2.mainloop()
+         
             
-         def screen3():
+        def screen3():
             root.destroy()
             root3 = tk.Tk()
             root3.title("Add Member")
@@ -33,29 +86,21 @@ class screendesign():
             ttk.Button(root3, text="Back to Menu", command = screendesign).place(height = 30, width = 100, x = 10, y = 0)
             ttk.Label(root3, text="Add Guest Pass").place(height = 30, width = 200, x= 300, y = 0)
             ttk.Button(root3, text="Exit Program", command=root3.destroy).place(height = 30, width = 100, x = 600, y = 0)
-            ttk.Label(root3, text="Enter Member First Name:").place(height = 30, width = 200, x = 10, y = 50)
+            ttk.Label(root3, text="Guest First Name:").place(height = 30, width = 200, x = 10, y = 50)
             self.firstName = tk.StringVar()
             ttk.Entry(root3, width=40, textvariable=self.firstName).place(height = 30, width = 200, x = 200, y = 50)
-            ttk.Label(root3, text="Enter Member Last Name:").place(height = 30, width = 200, x = 10, y = 100)
+            ttk.Label(root3, text="Guest Last Name:").place(height = 30, width = 200, x = 10, y = 100)
             self.lastName = tk.StringVar()
             ttk.Entry(root3, width=40, textvariable=self.lastName).place(height = 30, width = 200, x = 200, y = 100)
-
-            ttk.Button(root3, width=40, text="Member in System?").place(height = 30, width = 200, x = 10, y = 150)
+            ttk.Label(root3, width=40, text="Member in System?").place(height = 30, width = 200, x = 10, y = 150)
             self.formermember = tk.StringVar()
             ttk.Entry(root3, width=80, textvariable=self.formermember, state="readonly").place(height = 30, width = 200, x = 200, y = 150)
-        
-        
-            #add find member for Entry: Former Member
-            #def findmember(self):
-            #    formermember = print("I don't know how to do this")
             
-            #add a button to update the database with the new entry
-            
-            ttk.Label(root3, text="Enter New Member First Name:").place(height = 30, width = 250, x = 10, y = 200)
+            ttk.Label(root3, text="Guest First Name:").place(height = 30, width = 250, x = 10, y = 200)
             self.newMemberFirst = tk.StringVar()
             ttk.Entry(root3, width=40, textvariable=self.newMemberFirst).place(height = 30, width = 200, x = 220, y = 200)   
          
-            ttk.Label(root3, text="Last Name:").place(height = 30, width = 200, x = 10, y = 235)
+            ttk.Label(root3, text="Guest Last Name:").place(height = 30, width = 200, x = 10, y = 235)
             self.newMemberLast = tk.StringVar()
             ttk.Entry(root3, width=40, textvariable=self.newMemberLast).place(height = 30, width = 200, x = 220, y = 235)   
             
@@ -78,7 +123,6 @@ class screendesign():
             ttk.Label(root3, text="Age:").place(height = 30, width = 200, x = 10, y = 410)
             self.newMemberAge = tk.StringVar()
             ttk.Entry(root3, width=40, textvariable=self.newMemberAge).place(height = 30, width = 200, x = 220, y = 410)   
-
             
             
         def screen4():
