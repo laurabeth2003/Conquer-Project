@@ -8,3 +8,5 @@ This is the beginning of our final project for COS2212, Computer Software Develo
 4/23 Ty finished the GUI interface for screen 3, pending connection to the database and an add member button. Laura finshed the GUI interface for screen 2, but ran into issues connecting to the database. 
 
 4/26 Laura finished screen 2 - everything is connected to the database. 
+
+4/28 Ty made a few minor changes to the GUI interface for screen 3. He also laid the framework for screen 4. Both screens still need to be connected to the database.
