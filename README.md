@@ -36,6 +36,20 @@ def calculate_year(birthDate):
     if ((today.month, today.day) < (birthDate.month, birthDate.day)):
         years = years - 1
     return years
+
+def calculate_date(Date, OtherDate):
+    Date = Date.replace("/", " ")
+    Date = Date.replace("-", " ")
+    Date = Date.replace(".", " ")
+    Date = Date.split()
+    OtherDate = OtherDate.replace("/", " ")
+    OtherDate = OtherDate.replace("-", " ")
+    OtherDate = OtherDate.replace(".", " ")
+    OtherDate = OtherDate.split()
+    Date = date(int(Date[2]),int(Date[0]),int(Date[1]))
+    OtherDate = date(int(OtherDate[2]),int(OtherDate[0]),int(OtherDate[1]))
+    return Date, OtherDate
+
         
 def calculate_monthyear(currentdate):
     global currentmonth
@@ -367,7 +381,7 @@ class screendesign():
                         ttk.Label(root2, text= rowlist[1]).place(height = 30, width = 200, x = 250, y = (i*35 + 70))
                         ttk.Label(root2, text= rowlist[2]).place(height = 30, width = 150, x = 450, y = (i*35 + 70))
                         ttk.Button(root2, text = "Yes", command = contin).place(height = 30, width = 45, x = 600, y = (i*35 + 70))
-                        
+                        memberIDlist.append(rowlist[2])
                 
             
             root.destroy()
@@ -385,14 +399,17 @@ class screendesign():
          
             
         def screen3():
+            def backtomain():
+                root3.destroy()
+                screendesign()
             root.destroy()
             root3 = tk.Tk()
             root3.title("Add Member")
             root3.geometry("700x400")   
             
-            ttk.Button(root3, text="Back to Menu", command = screendesign).place(height = 30, width = 100, x = 10, y = 0)
-            ttk.Label(root3, text="Add Guest Pass").place(height = 30, width = 200, x= 300, y = 0)
-            ttk.Button(root3, text="Exit Program", command=root3.destroy).place(height = 30, width = 100, x = 600, y = 0)
+            ttk.Button(root3, text = "Exit Program", command = root3.destroy).place(height = 30, width = 100, x = 10, y = 0)
+            ttk.Button(root3, text = "Back to Menu", command = backtomain).place(height = 30, width = 100, x = 590, y = 0)
+            ttk.Label(root3, text = "Add Member", font=("Ariel", 18)).place(height= 30, width = 300, x = 265, y = 0)
             ttk.Label(root3, text="Guest First Name:").place(height = 30, width = 200, x = 10, y = 50)
             self.firstName = tk.StringVar()
             ttk.Entry(root3, width=40, textvariable=self.firstName).place(height = 30, width = 200, x = 200, y = 50)
@@ -433,18 +450,29 @@ class screendesign():
             
             
         def screen4():
+            def backtomain():
+                root4.destroy()
+                screendesign()
             root.destroy()
             root4 = tk.Tk()
             root4.title("Guest List")
+            ttk.Label(root4, text = "Guest List", font=("Ariel", 18)).place(height= 30, width = 300, x = 265, y = 0)
+            ttk.Button(root4, text = "Exit Program", command = root4.destroy).place(height = 30, width = 100, x = 10, y = 0)
+            ttk.Button(root4, text = "Back to Menu", command = backtomain).place(height = 30, width = 100, x = 590, y = 0)
             root4.geometry("700x400")
             root4.mainloop()
                 
         def screen5():
+            def backtomain():
+                root5.destroy()
+                screendesign()
             root.destroy()
             root5 = tk.Tk()
             root5.title("Member Pass Records")
             root5.geometry("700x400")
-            ttk.Button(root5, text="Add Guest Pass", command = root5.destroy).place(height = 30, width = 350, x = 165, y = 190)
+            ttk.Label(root5, text = "Member Pass Records", font=("Ariel", 18)).place(height= 30, width = 300, x = 265, y = 0)
+            ttk.Button(root5, text = "Exit Program", command = root5.destroy).place(height = 30, width = 100, x = 10, y = 0)
+            ttk.Button(root5, text = "Back to Menu", command = backtomain).place(height = 30, width = 100, x = 590, y = 0)
             root5.mainloop()
              
         root = tk.Tk()
