@@ -410,46 +410,45 @@ class screendesign():
             ttk.Button(root3, text = "Exit Program", command = root3.destroy).place(height = 30, width = 100, x = 10, y = 0)
             ttk.Button(root3, text = "Back to Menu", command = backtomain).place(height = 30, width = 100, x = 590, y = 0)
             ttk.Label(root3, text = "Add Member", font=("Ariel", 18)).place(height= 30, width = 300, x = 265, y = 0)
-            ttk.Label(root3, text="Guest First Name:").place(height = 30, width = 200, x = 10, y = 50)
-            self.firstName = tk.StringVar()
-            ttk.Entry(root3, width=40, textvariable=self.firstName).place(height = 30, width = 200, x = 200, y = 50)
-            ttk.Label(root3, text="Guest Last Name:").place(height = 30, width = 200, x = 10, y = 100)
-            self.lastName = tk.StringVar()
-            ttk.Entry(root3, width=40, textvariable=self.lastName).place(height = 30, width = 200, x = 200, y = 100)
-            ttk.Label(root3, width=40, text="Member in System?").place(height = 30, width = 200, x = 10, y = 150)
+            
+            ttk.Label(root3, text="Membership ID:").place(height = 30, width = 200, x = 10, y = 50)
+            self.memberID = tk.StringVar() 
+            ttk.Entry(root3, width=40, textvariable=self.memberID).place(height = 30, width = 200, x = 220, y = 50)
+            
+            ttk.Label(root3, width=40, text="Member in System?").place(height = 30, width = 200, x = 10, y = 90)
             self.formermember = tk.StringVar()
-            ttk.Entry(root3, width=80, textvariable=self.formermember, state="readonly").place(height = 30, width = 200, x = 200, y = 150)
+            ttk.Entry(root3, width=80, textvariable=self.formermember, state="readonly").place(height = 30, width = 200, x = 220, y = 90)
             
-            ttk.Label(root3, text="Guest First Name:").place(height = 30, width = 250, x = 10, y = 200)
+            ttk.Label(root3, text="Member First Name:").place(height = 30, width = 250, x = 10, y = 140)
             self.newMemberFirst = tk.StringVar()
-            ttk.Entry(root3, width=40, textvariable=self.newMemberFirst).place(height = 30, width = 200, x = 220, y = 200)   
+            ttk.Entry(root3, width=40, textvariable=self.newMemberFirst).place(height = 30, width = 200, x = 220, y = 140)   
          
-            ttk.Label(root3, text="Guest Last Name:").place(height = 30, width = 200, x = 10, y = 235)
+            ttk.Label(root3, text="Member Last Name:").place(height = 30, width = 200, x = 10, y = 175)
             self.newMemberLast = tk.StringVar()
-            ttk.Entry(root3, width=40, textvariable=self.newMemberLast).place(height = 30, width = 200, x = 220, y = 235)   
+            ttk.Entry(root3, width=40, textvariable=self.newMemberLast).place(height = 30, width = 200, x = 220, y = 175)   
             
-            ttk.Label(root3, text="Membership ID:").place(height = 30, width = 200, x = 10, y = 270)
+            ttk.Label(root3, text="Membership ID:").place(height = 30, width = 200, x = 10, y = 210)
             self.newMemberID = tk.StringVar()
-            ttk.Entry(root3, width=40, textvariable=self.newMemberID).place(height = 30, width = 200, x = 220, y = 270)   
+            ttk.Entry(root3, width=40, textvariable=self.newMemberID).place(height = 30, width = 200, x = 220, y = 210)   
          
-            ttk.Label(root3, text="Membership Type:").place(height = 30, width = 200, x = 10, y = 305)
+            ttk.Label(root3, text="Membership Type:").place(height = 30, width = 200, x = 10, y = 245)
             self.newMemberType = tk.StringVar()
-            ttk.Entry(root3, width=40, textvariable=self.newMemberType).place(height = 30, width = 200, x = 220, y = 305)   
+            ttk.Entry(root3, width=40, textvariable=self.newMemberType).place(height = 30, width = 200, x = 220, y = 245)   
          
-            ttk.Label(root3, text="Phone:").place(height = 30, width = 200, x = 10, y = 340)
+            ttk.Label(root3, text="Phone:").place(height = 30, width = 200, x = 10, y = 280)
             self.newMemberPhone = tk.StringVar()
-            ttk.Entry(root3, width=40, textvariable=self.newMemberPhone).place(height = 30, width = 200, x = 220, y = 340)   
+            ttk.Entry(root3, width=40, textvariable=self.newMemberPhone).place(height = 30, width = 200, x = 220, y = 280)   
             
-            ttk.Label(root3, text="Date of Birth:").place(height = 30, width = 200, x = 10, y = 375)
+            ttk.Label(root3, text="Date of Birth:").place(height = 30, width = 200, x = 10, y = 315)
             self.newMemberDOB = tk.StringVar()
-            ttk.Entry(root3, width=40, textvariable=self.newMemberDOB).place(height = 30, width = 200, x = 220, y = 375)   
+            ttk.Entry(root3, width=40, textvariable=self.newMemberDOB).place(height = 30, width = 200, x = 220, y = 315)   
          
-            ttk.Label(root3, text="Age:").place(height = 30, width = 200, x = 10, y = 410)
+            ttk.Label(root3, text="Age:").place(height = 30, width = 200, x = 10, y = 350)
             self.newMemberAge = tk.StringVar()
-            ttk.Entry(root3, width=40, textvariable=self.newMemberAge).place(height = 30, width = 200, x = 220, y = 410)   
+            ttk.Entry(root3, width=40, textvariable=self.newMemberAge).place(height = 30, width = 200, x = 220, y = 350)   
             
             
-        def screen4():
+       def screen4():
             def backtomain():
                 root4.destroy()
                 screendesign()
@@ -460,6 +459,20 @@ class screendesign():
             ttk.Button(root4, text = "Exit Program", command = root4.destroy).place(height = 30, width = 100, x = 10, y = 0)
             ttk.Button(root4, text = "Back to Menu", command = backtomain).place(height = 30, width = 100, x = 590, y = 0)
             root4.geometry("700x400")
+            
+            ttk.Label(root4, text="Search for Guest:").place(height = 30, width = 200, x = 10, y = 50)
+            self.guestSearch = tk.StringVar() 
+            ttk.Entry(root4, width=40, textvariable=self.guestSearch).place(height = 30, width = 250, x = 150, y = 50)
+            
+            ttk.Button(root4, width=40, text="Show all").place(height = 30, width = 200, x = 450, y = 50)
+            
+            ttk.Label(root4, text="First:").place(height = 30, width = 200, x = 10, y = 90)
+            ttk.Label(root4, text="Last:").place(height = 30, width = 200, x = 120, y = 90)   
+            ttk.Label(root4, text="Email:").place(height = 30, width = 200, x = 240, y = 90)
+            ttk.Label(root4, text="Phone #:").place(height = 30, width = 200, x = 400, y = 90)
+            ttk.Label(root4, text="DOB:").place(height = 30, width = 200, x = 530, y = 90) 
+            ttk.Label(root4, text="Age:").place(height = 30, width = 200, x = 650, y =90)
+            
             root4.mainloop()
                 
         def screen5():
