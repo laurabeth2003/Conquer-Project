@@ -6,6 +6,7 @@
 #Created on: 4/21/2020
 
 #Last edited: 4/26/2020
+
 import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import ImageTk, Image
@@ -626,15 +627,15 @@ class screendesign():
                     allguests = db.read_table_1condition(db.create_connection(db.data), query, (currentmemberID,))
                     print(allguests)
                     gfirst = ttk.Label(canvas, text = "Guest First Name")
-                    canvas.create_window(162, 140 + g*35, height = 30, width = 125, window = gfirst)
+                    canvas.create_window(70, 150 + g*35, height = 30, width = 125, window = gfirst)
                     glast = ttk.Label(canvas, text = "Guest Last Name")
-                    canvas.create_window(287, 140 + g*35, height = 30, width = 125, window = glast)
+                    canvas.create_window(220, 150 + g*35, height = 30, width = 125, window = glast)
                     gbirth = ttk.Label(canvas, text= "Guest Birth Date")
-                    canvas.create_window(412, 140 + g*35, height = 30, width = 125, window = gbirth)
+                    canvas.create_window(370, 150 + g*35, height = 30, width = 125, window = gbirth)
                     gage = ttk.Label(canvas, text= "Guest Age")
-                    canvas.create_window(525, 140 + g*35, height = 30, width = 100, window = gage)
+                    canvas.create_window(530, 150 + g*35, height = 30, width = 100, window = gage)
                     gdate = ttk.Label(canvas, text= "Visit Date")
-                    canvas.create_window(627, 140 + g*35, height = 30, width = 105, window = gdate)
+                    canvas.create_window(650, 150 + g*35, height = 30, width = 105, window = gdate)
                     
                     for guest in allguests:
                         g += 1
@@ -642,15 +643,15 @@ class screendesign():
                         print(guestlist)
                         if (calculate_date(guestlist[8]) > calculate_date(start) and calculate_date(guestlist[8]) < calculate_date(end)): 
                             gfirstlabel = ttk.Label(canvas, text = guestlist[2])
-                            canvas.create_window(162, 225 + g*35, height = 30, width = 125, window = gfirstlabel)
+                            canvas.create_window(70, 160 + g*35, height = 30, width = 125, window = gfirstlabel)
                             glastlabel = ttk.Label(canvas, text = guestlist[3])
-                            canvas.create_window(287, 225 + g*35, height = 30, width = 125, window = glastlabel)
+                            canvas.create_window(220, 160 + g*35, height = 30, width = 125, window = glastlabel)
                             gbirthlabel = ttk.Label(canvas, text = guestlist[6])
-                            canvas.create_window(412, 225 + g*35, height = 30, width = 125, window = gbirthlabel)
+                            canvas.create_window(385, 160 + g*35, height = 30, width = 125, window = gbirthlabel)
                             gagelabel = ttk.Label(canvas, text = guestlist[7])
-                            canvas.create_window(525, 225 + g*35, height = 30, width = 100, window = gagelabel)
+                            canvas.create_window(555, 160 + g*35, height = 30, width = 100, window = gagelabel)
                             gvisitdatelabel = ttk.Label(canvas, text = guestlist[8])
-                            canvas.create_window(627, 225 + g*35, height = 30, width = 105, window = gvisitdatelabel)
+                            canvas.create_window(650, 160 + g*35, height = 30, width = 105, window = gvisitdatelabel)
                     
                             
                     
@@ -673,13 +674,13 @@ class screendesign():
                 rows = db.read_table(db.create_connection(db.data), query)
                 memberIDs = []
                 mfirstlabel = ttk.Label(canvas, text = "First Name")
-                canvas.create_window(10, 140, height = 30, width = 130, window = mfirstlabel)
+                canvas.create_window(70, 150, height = 30, width = 130, window = mfirstlabel)
                 mlastlabel = ttk.Label(canvas, text = "Last Name")
-                canvas.create_window(140, 140, height = 30, width = 130, window = mlastlabel)
+                canvas.create_window(190, 150, height = 30, width = 130, window = mlastlabel)
                 mpasses_ulabel = ttk.Label(canvas, text = "Passes used during period")
-                canvas.create_window(270, 140, height = 30, width = 210, window = mpasses_ulabel)
+                canvas.create_window(350, 150, height = 30, width = 210, window = mpasses_ulabel)
                 mpasses_rlabel = ttk.Label(canvas, text = "Passes remaining this month")
-                canvas.create_window(480, 140, height = 30, width = 200, window = mpasses_rlabel)
+                canvas.create_window(580, 150, height = 30, width = 200, window = mpasses_rlabel)
                 start = StartDate.get()
                 start = start.strip()
                 end = EndDate.get()
@@ -714,13 +715,13 @@ class screendesign():
                         i += 1
                         col = list(c)
                         memberF = ttk.Label(canvas, text = str(col[0]))
-                        canvas.create_window(10, (140 + i*35), height = 30, width = 130, window = memberF)
+                        canvas.create_window(70, (140 + i*35), height = 30, width = 130, window = memberF)
                         memberL = ttk.Label(canvas, text = str(col[1]))
-                        canvas.create_window(140, (140 + i*35), height = 30, width = 130, window = memberL)
+                        canvas.create_window(190, (140 + i*35), height = 30, width = 130, window = memberL)
                         memberI = ttk.Label(canvas, text = str(visitsinperiod[u]))
-                        canvas.create_window(270, (140 + i*35), height = 30, width = 20, window = memberI)
+                        canvas.create_window(275, (140 + i*35), height = 30, width = 20, window = memberI)
                         memberexpand = ttk.Button(canvas, text = "Expand", command = expand)
-                        canvas.create_window(310, (140 + i*35), height = 30, width = 100, window =memberexpand)
+                        canvas.create_window(340, (140 + i*35), height = 30, width = 100, window =memberexpand)
                         query = "SELECT visitDate FROM visits WHERE memberID = ?"
                         rows = db.read_table_1condition(db.create_connection(db.data), query, (uniqueIDs[u],))
                         for row in rows:
@@ -743,6 +744,7 @@ class screendesign():
             vbar=tk.Scrollbar(canvas,orient=tk.VERTICAL)
             vbar.pack(side=tk.RIGHT,fill=tk.Y)
             vbar.config(command=canvas.yview)
+            
             ttk.Label(root5).place(height= 70, width = 680, x = 0, y = 0)
             ttk.Label(root5, text = "Member Pass Records", font=("Ariel", 18)).place(height= 30, width = 300, x = 240, y = 0)
             ttk.Button(root5, text = "Exit Program", command = root5.destroy).place(height = 30, width = 100, x = 10, y = 0)
