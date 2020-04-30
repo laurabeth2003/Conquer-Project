@@ -593,7 +593,7 @@ class screendesign():
             root4.mainloop()
 
                 
-        def screen5():
+       def screen5():
             def motion(event):
                 global x
                 global y
@@ -627,15 +627,15 @@ class screendesign():
                     allguests = db.read_table_1condition(db.create_connection(db.data), query, (currentmemberID,))
                     print(allguests)
                     gfirst = ttk.Label(canvas, text = "Guest First Name")
-                    canvas.create_window(70, 150 + g*35, height = 30, width = 125, window = gfirst)
+                    canvas.create_window(70, 230 + g*35, height = 30, width = 125, window = gfirst)
                     glast = ttk.Label(canvas, text = "Guest Last Name")
-                    canvas.create_window(220, 150 + g*35, height = 30, width = 125, window = glast)
+                    canvas.create_window(220, 230 + g*35, height = 30, width = 125, window = glast)
                     gbirth = ttk.Label(canvas, text= "Guest Birth Date")
-                    canvas.create_window(370, 150 + g*35, height = 30, width = 125, window = gbirth)
+                    canvas.create_window(370, 230 + g*35, height = 30, width = 125, window = gbirth)
                     gage = ttk.Label(canvas, text= "Guest Age")
-                    canvas.create_window(530, 150 + g*35, height = 30, width = 100, window = gage)
+                    canvas.create_window(530, 230 + g*35, height = 30, width = 100, window = gage)
                     gdate = ttk.Label(canvas, text= "Visit Date")
-                    canvas.create_window(650, 150 + g*35, height = 30, width = 105, window = gdate)
+                    canvas.create_window(650, 230 + g*35, height = 30, width = 105, window = gdate)
                     
                     for guest in allguests:
                         g += 1
@@ -643,15 +643,15 @@ class screendesign():
                         print(guestlist)
                         if (calculate_date(guestlist[8]) > calculate_date(start) and calculate_date(guestlist[8]) < calculate_date(end)): 
                             gfirstlabel = ttk.Label(canvas, text = guestlist[2])
-                            canvas.create_window(70, 160 + g*35, height = 30, width = 125, window = gfirstlabel)
+                            canvas.create_window(70, 250 + g*35, height = 30, width = 125, window = gfirstlabel)
                             glastlabel = ttk.Label(canvas, text = guestlist[3])
-                            canvas.create_window(220, 160 + g*35, height = 30, width = 125, window = glastlabel)
+                            canvas.create_window(220, 250 + g*35, height = 30, width = 125, window = glastlabel)
                             gbirthlabel = ttk.Label(canvas, text = guestlist[6])
-                            canvas.create_window(385, 160 + g*35, height = 30, width = 125, window = gbirthlabel)
+                            canvas.create_window(385, 250 + g*35, height = 30, width = 125, window = gbirthlabel)
                             gagelabel = ttk.Label(canvas, text = guestlist[7])
-                            canvas.create_window(555, 160 + g*35, height = 30, width = 100, window = gagelabel)
+                            canvas.create_window(555, 250 + g*35, height = 30, width = 100, window = gagelabel)
                             gvisitdatelabel = ttk.Label(canvas, text = guestlist[8])
-                            canvas.create_window(650, 160 + g*35, height = 30, width = 105, window = gvisitdatelabel)
+                            canvas.create_window(650, 250 + g*35, height = 30, width = 105, window = gvisitdatelabel)
                     
                             
                     
