@@ -139,7 +139,6 @@ def screen5():
                             memberrem = ttk.Label(canvas, text = str(remaining))
                             canvas.create_window(550, (140 + i*35), height = 30, width = 120, window = memberrem)   root.destroy()
             
-             
             #RIGHT HERE!!!!!
             root5 = tk.Tk()
             root5.title("Member Pass Records")
@@ -166,4 +165,4 @@ def screen5():
             canvas.config(yscrollcommand=vbar.set)
             canvas.pack(side=tk.LEFT,expand=True,fill=tk.BOTH)
             root5.mainloop()
-           
+                 
