@@ -4,14 +4,16 @@
 
 #Created on: 4/21/2020
 
-# Last updated on: 5/05/2020
+#Last updated on: 5/05/2020
+
+#import modules for code, as well as our database creation from the other program
 import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import ImageTk, Image
 import database as db
 from datetime import date
 
-
+#initialize values to be used in the code later
 membertype = ""
 i = 0
 memberID = 0
@@ -32,6 +34,8 @@ y = 0
 u = 0
 go = 0
 guestname = ""
+
+#functions to set the current date and time
 def calculate_year(birthDate): 
     if (birthDate == ""):
         years = ""
@@ -52,10 +56,8 @@ def calculate_date(Date):
     Date = Date.replace(".", " ")
     Date = Date.split()
     Date = date(int(Date[2]),int(Date[0]),int(Date[1]))
-    
     return Date
-
-        
+    
 def calculate_monthyear(currentdate):
     global currentmonth
     global currentyear
@@ -83,22 +85,24 @@ def todaydate():
     todays = str((todays[1]) + "/" + (todays[2]) + "/" + (todays[0]))
     return todays
 
-
-
+#start of programming each of the individual screens
 class screendesign():
     def __init__(self):
+    #start of the design of screen 2, the add guest option on the main menu
         def screen2():
             def motion(event):
                 global x
                 global y
                 x = root2.winfo_pointerx() - root2.winfo_rootx()
                 y = root2.winfo_pointery() - root2.winfo_rooty()
-
             
+            #defines the back to main function to go back to the main menu
             def backtomain():
                 root2.destroy()
                 screendesign()
-                
+            
+            #function to search for a member based on their name,
+            #then to add a guest to that member
             def search():
                 global u
                 u = 0
@@ -141,7 +145,8 @@ class screendesign():
                         elif (u >= 2): 
                             go = 0
                             ttk.Label(root2, text = "This member is already out of passes", font = ("Ariel", 18)).place(height = 50, width = 450, x = 160, y = (i*35 + 170))
-                    def one():
+                   #continuation of the search
+                   def one():
                         global u
                         global memberID  
                         global currentmonth
@@ -177,10 +182,8 @@ class screendesign():
                             ttk.Button(root2, text = "Search", command = guestsearch).place(height = 30, width = 100, x = 590, y = (i*35 + 140))
                         elif (u >= 2): 
                             ttk.Label(root2, text = "This member is already out of passes", font = ("Ariel", 18)).place(height = 50, width = 450, x = 160, y = (i*35 + 170))
-                        
                     
-                                
-                            
+                    #creates a function to search for a pre-existing guest
                     def guestsearch():
                         global guestname
                         def yes():
@@ -203,9 +206,10 @@ class screendesign():
                                 info = list(info)
                             query2 = "INSERT INTO visits VALUES (?,?,?,?,?,?,?,?,?)"
                             db.insertvisits(db.create_connection(db.data), query2, info[0], memberID, info[2], info[3], info[4], info[5], info[6], info[7], todaydate())
-                            ttk.Label(root2, text = "Guest Pass Added", font = ("Ariel", 13)).place(height = 30, width = 200, x = 250, y = (210 + (g*35)))
+                            ttk.Label(root2, text = "Guest Pass Added", font = ("Ariel", 13)).place(height = 30, width = 200, x = 250, y = (210 + (g*35)))                         
                             if (go == 0):
                                 backtomain()
+                            #creates a new screen to enter new guest information
                             if (go == 1): 
                                 ttk.Label(root2).place(height = 365, width = 700, x = 0, y = 35)
                                 ttk.Label(root2, text = "Enter Guest 2:", font = ("Ariel",18)).place(height = 30, width = 350, x = 100, y = 35)
@@ -216,7 +220,7 @@ class screendesign():
                                 i = -2
                                 go = 0
                                 
-                                
+                        #uses the above function and adds the guest to the guest list (can be seen in screen 4)        
                         def addguest():
                             def insertguest():
                                 global guestname
@@ -244,7 +248,6 @@ class screendesign():
                                     guestID += 1
                                 else:
                                     guestID = 100000001
-                                
                                 firstname = (first.get())
                                 firstname = firstname.strip()
                                 lastname = last.get()
@@ -300,6 +303,7 @@ class screendesign():
                             ttk.Entry(root2, textvariable= birthdate).place(height = 30, width = 300, x = 300, y = 210)  
                             ttk.Button(root2, text = "Enter Guest into Database", command = insertguest).place(height = 45, width = 600, x = 50, y = 245)
                         
+                        #screen if the user adds only one new guest
                         global i
                         guestIDlist = []
                         ttk.Label(root2).place(height = 370, width = 700, x = 0, y = i*35 + 175)
@@ -358,7 +362,8 @@ class screendesign():
                                     ttk.Button(root2, text = "No", command = addguest).place(height = 30, width = 45, x = 650, y = i*35 + 175)
                                     guestIDlist.append(guestlist[2])
                                 i -= 1
-            
+                    
+                    #screen if the user adds two new guests
                     global i
                     global y
                     global memberID
@@ -417,8 +422,8 @@ class screendesign():
                         ttk.Label(root2, text= rowlist[2]).place(height = 30, width = 150, x = 450, y = (i*35 + 70))
                         ttk.Button(root2, text = "Yes", command = contin).place(height = 30, width = 45, x = 600, y = (i*35 + 70))
                         memberIDlist.append(rowlist[2])
-                
             
+            #destroys the main menu screen, and initializes the GUI for screen 2
             root.destroy()
             root2 = tk.Tk()
             root2.title("Add Guest Pass")
@@ -432,8 +437,10 @@ class screendesign():
             ttk.Button(root2, text = "Search", command = search).place(height = 30, width = 100, x = 590, y = 35)
             root2.mainloop()
          
-            
+        #start of the design of screen 3, the add member option on the main menu 
         def screen3():
+        #creates a function to look for a specific memberID in the system,
+        #and if not found takes the user to add a new member
             def searchmemberID():
                 def teammember():
                     global membertype
@@ -473,7 +480,6 @@ class screendesign():
                     ttk.Label(root3).place(height = 85, width = 700, x = 0, y = 315)
                     ttk.Label(root3, text = "Member Added", font = ("Ariel", 15)).place(height = 30, width = 300, x = 250, y = 315)
                     
-                
                 memberIDfixed = memberIDentry.get()
                 memberIDfixed = int(memberIDfixed.strip())
                 
@@ -482,10 +488,12 @@ class screendesign():
                 system = 0 
                 if (len(members) ==  0):
                     system += 1
-                
+
+                #determines if the member has already been added
                 if (system == 0): 
                     ttk.Label(root3, text = "Member already exists in system...", font = ("Ariel", 15)).place(height = 40, width = 400, x = 200, y = 70)
                 
+                #sets up the GUI for screen 3 when you do a member search
                 elif (system == 1):
                     ttk.Label(root3).place(height = 330, width = 700, x = 0, y = 70)
                     ttk.Label(root3, text="Member First Name:").place(height = 30, width = 200, x = 10, y = 70)
@@ -519,10 +527,11 @@ class screendesign():
          
                     ttk.Button(root3, text = "Add Member", command = addmember).place(height = 30, width = 500, x = 100, y = 315)
             
-            
             def backtomain():
                 root3.destroy()
                 screendesign()
+                
+            #again, destroys the main menu window and sets up the new window
             root.destroy()
             root3 = tk.Tk()
             root3.title("Add Member")
@@ -537,8 +546,9 @@ class screendesign():
             ttk.Entry(root3, textvariable = memberIDentry).place(height = 30, width = 400, x = 160, y = 35)
             ttk.Button(root3, text = "Search", command = searchmemberID).place(height = 30, width = 100, x = 580, y = 35 )
             
-            
+        #start of the design of screen 4, the guest list option on the main menu    
         def screen4():
+            #search function that allows the user to search for a specific guest
             def search():
                 global i
                 i = 0
@@ -548,6 +558,7 @@ class screendesign():
                 guestlist = guestlist.split()
                 if (len(guestlist) == 1): 
                     query = "SELECT * from guest WHERE guestFirstName = ?"
+                    #creates headings for when the user does a search or list all guests
                     allguest = db.read_table_1condition(db.create_connection(db.data), query, (guestlist[0],)) 
                     ttk.Label(root4, text = "Guest ID:").place(x = 0, y = 70, width = 70, height = 30)
                     ttk.Label(root4, text = "First Name:").place(x = 65, y = 70, width = 80, height = 30) 
@@ -604,6 +615,7 @@ class screendesign():
                         guestagelabel= ttk.Label(canvas, text = guest[7])
                         canvas.create_window(660, 155+ i*35, width = 30, height = 30, window = guestagelabel) 
             
+            #lists all the guests in the database
             def listall():
                 global i 
                 i = 0 
@@ -635,9 +647,11 @@ class screendesign():
                     canvas.create_window(590, 155+ i*35, width = 80, height = 30, window = guestbirthdatelabel) 
                     guestagelabel= ttk.Label(canvas, text = guest[7])
                     canvas.create_window(660, 155+ i*35, width = 30, height = 30, window = guestagelabel) 
+                 
             def backtomain():
                 root4.destroy()
                 screendesign()
+            #destroys the main menu window, creates a new window with buttons and text
             root.destroy()
             root4 = tk.Tk()
             root4.title("Guest List")
@@ -662,7 +676,7 @@ class screendesign():
             canvas.pack(side=tk.LEFT,expand=True,fill=tk.BOTH)
             root4.mainloop()
 
-                
+        #start of the design of screen 5, the member records option on the main menu        
         def screen5():
             def motion(event):
                 global x
@@ -675,6 +689,8 @@ class screendesign():
                 root5.destroy()
                 screendesign()
             
+            #allows for searching of members by the date they visited the gym,
+            #as well as allowing to see what guests they brought in during that time
             def searchdate():
                 def expand():
                     global i 
@@ -697,6 +713,8 @@ class screendesign():
                     canvas.create_window(340, 150, height = 10000, width = 680,window = initiallabel)
                     query = "SELECT * FROM visits WHERE memberID = ?"
                     allguests = db.read_table_1condition(db.create_connection(db.data), query, (currentmemberID,))
+                    #what is seen when the expand button is pressed, to see the
+                    #guests the member has brought in during the time period
                     gfirst = ttk.Label(canvas, text = "Guest First Name")
                     canvas.create_window(70, 150, height = 30, width = 125, window = gfirst)
                     glast = ttk.Label(canvas, text = "Guest Last Name")
@@ -722,9 +740,7 @@ class screendesign():
                             canvas.create_window(555, 185 + length*35, height = 30, width = 100, window = gagelabel)
                             gvisitdatelabel = ttk.Label(canvas, text = guestlist[8])
                             canvas.create_window(650, 185 + length*35, height = 30, width = 105, window = gvisitdatelabel)
-                    
-                            
-                    
+                         
                 global currentmonth
                 global currentyear
                 global todaymonth
@@ -737,6 +753,7 @@ class screendesign():
                 y = 0
                 root5.bind('<Button-1>', motion)
                 i = 0
+                #creates new labels for when the user does a search
                 initiallabel2 = ttk.Label(canvas) 
                 canvas.create_window(340, 140, height = 10000, width = 680, window = initiallabel2)
                 today()
@@ -751,6 +768,7 @@ class screendesign():
                 canvas.create_window(350, 150, height = 30, width = 210, window = mpasses_ulabel)
                 mpasses_rlabel = ttk.Label(canvas, text = "Passes remaining this month")
                 canvas.create_window(580, 150, height = 30, width = 200, window = mpasses_rlabel)
+                #changes the start and end dates so the code can read them
                 start = StartDate.get()
                 start = start.strip()
                 if (start != ""):
@@ -799,6 +817,7 @@ class screendesign():
                             visit += 1
                     visitsinperiod.append(visit)
                 
+                #code for listing the member information
                 for u in range(0, len(uniqueIDs)):
                     visits = 0
                     query2 = "SELECT memberFirstName, memberLastName FROM member WHERE memberID = ?"
@@ -825,7 +844,8 @@ class screendesign():
                             remaining = (2 - (visits))
                             memberrem = ttk.Label(canvas, text = str(remaining))
                             canvas.create_window(610, (140 + i*35), height = 30, width = 120, window = memberrem)
-                
+            
+            #destroys the main menu, places buttons and text for screen 5 on the screen
             root.destroy()
             root5 = tk.Tk()
             root5.title("Member Pass Records")
@@ -853,10 +873,13 @@ class screendesign():
             canvas.config(yscrollcommand=vbar.set)
             canvas.pack(side=tk.LEFT,expand=True,fill=tk.BOTH)
             root5.mainloop()
-                         
+        
+        #sets up the main menu
         root = tk.Tk()
         root.title("Guest Pass Program")
         root.geometry("700x400")  
+        
+        #path for the company's logo on the main screen
         path = 'C:/workspace-python/python/final project/resize.png' 
         image = Image.open(path)
         img = ImageTk.PhotoImage(image)
