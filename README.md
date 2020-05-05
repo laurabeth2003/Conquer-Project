@@ -18,3 +18,5 @@ Laura laid the framework for screen 5.
 4/30 Ty fixed spacing and finished screen 5. 
 
 Laura connected all the other screens to the database, and finished screen 4.
+
+5/5 Ty entered comments to polish the code, and Laura finished bug testing the program. We turned in our project on this day.
