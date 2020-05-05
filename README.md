@@ -1,7 +1,7 @@
 # Conquer-Project
 Project for Python Class
 
-This is the beginning of our final project for COS2212, Computer Software Development II.
+This is the beginning of our final project log for COS2212, Computer Software Development II.
 
 4/21 Laura added main menu screen and database screen. 
 
@@ -9,7 +9,7 @@ This is the beginning of our final project for COS2212, Computer Software Develo
 
 Laura finshed the GUI interface for screen 2, but ran into issues connecting to the database. 
 
-4/26 Laura finished screen 2 - everything is connected to the database. 
+4/26 Laura finished screen 2 - now everything is connected to the database. 
 
 4/28 Ty made a few minor changes to the GUI interface for screen 3. He also laid the framework for screen 4. Both screens still need to be connected to the database.
 
@@ -17,4 +17,4 @@ Laura laid the framework for screen 5.
 
 4/30 Ty fixed spacing and finished screen 5. 
 
-Laura finished screen 4.
+Laura connected all the other screens to the database, and finished screen 4.
