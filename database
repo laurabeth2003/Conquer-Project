@@ -1,13 +1,14 @@
-# Final-Project-Database
+#Final-Project-Database
+#you may have to run this before running the regular code
 
-# import modules for code, as well as establish where the database will be stored
+#import modules for code, as well as establish where the database will be stored
 import sqlite3 
 from sqlite3 import Error
 from datetime import date 
 from _overlapped import NULL
 data = r"C:\sqlite\db\conquer.sqlite"
 
-# the function we will use to calculate the member's and guest's age
+#the function we will use to calculate the member's and guest's age
 def calculate_year(birthDate): 
     birthDate = birthDate.replace("/"," ")
     birthDate = birthDate.split()
@@ -19,8 +20,8 @@ def calculate_year(birthDate):
         
     return years
  
-# the lists in which we will hold all the data for each member
-# this establishes a baseline for member records, making sure they can be recovered from 4/23/2020
+#the lists in which we will hold all the data for each member
+#this establishes a baseline for member records, making sure they can be recovered from 4/23/2020
 MemberID = [100008053,100008584,100008405,100005596,100006959,100006960,100000033,100000688,100000689,100000553,100000552,100009007,100009948,100005576,100007960,100007961,100007814,100007813,100008302,100000176,100005074,100009520,100006969,100009455,100008093,100009446,100008091,100008092,100007188,100009287,100007946,100010126,100008783,100010283,100003081,100001779,100003874,100003809,100009532,100008623,100000247,100009586,100009916,100003872,100003871,100007252,100009252,100006741,100004605,100010215,100003815,100003100,100009581,100005171,100005351,100009510,100007947,100009713,100009736,100010150,100006683,100006684,100006685,100005488,100006657,100006658,100008128,100002486,100002240,100002239,100000834,100000837,100008273,100008351,100004300,100004299,100003254,100007437,100005730,100004887,100004019,100004020,100004105,100005352,100002578,100001040,100007963,100008033,100007899,100010242,100005848,100005000,100009738,100006800,100005767,100008795,100004686,100007066,100000713,100007299,100004999,100000165,100004045,100007010,100008916,100001778,100002865,100002229,100000246,100005330,100009528,100010117,100000130,100005169,100005170,100000200,100005846,100009293,100008417,100000444,100000177,100003253,100004445,100001290,100005819,100001039]
 MemberFirst = ["Hana","Allison","Andrea","Isabella","Ben","Leo","Steve","Jaxon","Teddy","Kaylee","Nathan","Jaxon","Lucas","Nathaniel","Eman","Mariam","Faith","Nicole","Micah","Jack","Ryne","Genevieve","Liam","Willam","Cody","Elliana","Dominik","Jocelyn","Jessica","Sarah","Tyler","Levi","Noah","Mark","Ashley","Blake","Max","Asmara","Owen","Lucy","Jacob","Julia","Lucas","Ashton","Austin","Marta","Kassidy","Daniel","Zach","Macleod","Nick","Kari","Evan","Caleb","Daizie","Vincent","Jack","Danielle","Ethan","Yazzn","Brittany","Jackson","Jayden","Tony","Araeya","Hannah","Cassidy","Connor","Maliya","Michelle","Elliot","Graham","Evelyn","Wesley","Joelle","Miles","Darwin","Matthew","Ben","Zane","Max","Sam","Fiona","Calvin","Kiki","Sydney","Amin","Inam","Nazeeha","Angie","Jaden","Brandon","Charlotte","Lincoln","Amory","Rylan","Chase","Jake","Laura","Alexis","Wendy","Addison","Ty","Clara","Rebekah","Joshua","Matthew","Steve","Elizabeth","Elizabeth","Elaina","Joseph","Tyler","Andrew","Isaac","Sean","James","Zac","Jessica","Collin","Matt","Alexander","Lisa","James","Wessels","Ryan"]
 MemberLast = ["Aboubaker","Anderson","Apostolou","Bergeson","Bilger","Bilger","Calabrese","Cooke","Cooke","Curwirk","Curwick","Davis-Gries","Diffley","Engstrom","Faisal","Faisal","Fisher","Fisher","Folman","Froslee","Grosbier","Haas","Hagen","Harris","Harrison","Harty","Hawks","Hawks","Hegenbarth","Hill","Hursh","Inwards","Jacklitch","Janssen","Jensen","Johnson","Kinney","Kiros","Larson","Lawrence","Levinshteyn","Lima","Lima","Mattson","Mattson","Mccoy","Miller","Montalvan","Mooney","Nathan","Nelson","Nokken","Ollestad","Peltier","Peterson","Porter","Riley","Risty","Risty","Salem","Schultz","Schultz","Schultz","Sedesky","Sell","Sell","Seymour","Sherzer","Slotto","Slotto","Stevens","Stevens","Stusynski","Stusynski","Taylor","Taylor","Tennis","Theis","Tombers","Vanguilder","Von Wald","Von Wald","Wahlgren","Wessels","Wielinski","Wirrer","Yousuf","Yousuf","Yousuf","Zurek","Avelsgard","Benshoof","Blansette","Bolitho","Braddock","Ceronsky","Dallmann","Dotte","Erickson","Fiksen","Frantz","Granlund","Guell","Haas","Hevern","Johnson","Krueger","Kuester","Levinshteyn","Nelson","Newcomer","Orrey","Orrey","Peltier","Peltier","Sardeson","Scott","Siegle","Slater","Stout","Ten Napel","Tennis","Vague","Wallek","Wessels","Wirrer"]
@@ -137,7 +138,7 @@ def insertvisits(conn, query, condition1, condition2, condition3, condition4, co
 
 def main():
     global data
-    # creates the actual tables which data will be stored in
+    #creates the actual tables which data will be stored in
     sql_create_member_table = """ CREATE TABLE IF NOT EXISTS member (
                                         memberID INTEGER PRIMARY KEY,
                                         memberFirstName VARCHAR(20) NOT NULL,
@@ -177,10 +178,10 @@ def main():
                                     
     
     
-    # create a database connection
+    #create a database connection
     conn = create_connection(data)
  
-    # create tables
+    #create tables
     if conn is not None:
         # create member table
         create_table(conn, sql_create_member_table)
