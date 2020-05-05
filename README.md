@@ -5,8 +5,7 @@
 
 #Created on: 4/21/2020
 
-#Last edited: 4/26/2020
-
+# Last updated on: 5/05/2020
 import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import ImageTk, Image
@@ -34,15 +33,18 @@ u = 0
 go = 0
 guestname = ""
 def calculate_year(birthDate): 
-    birthDate = birthDate.replace("/"," ")
-    birthDate = birthDate.replace("."," ")
-    birthDate = birthDate.split()
-    birthDate = date(int(birthDate[2]),int(birthDate[0]),int(birthDate[1]))
-    today = date.today() 
-    years = today.year - birthDate.year
-    if ((today.month, today.day) < (birthDate.month, birthDate.day)):
-        years = years - 1
-    return years
+    if (birthDate == ""):
+        years = ""
+        return years
+    elif (len(birthDate) > 1): 
+        birthDate = birthDate.replace("/"," ")
+        birthDate = birthDate.split()
+        birthDate = date(int(birthDate[2]),int(birthDate[0]),int(birthDate[1]))
+        today = date.today() 
+        years = today.year - birthDate.year
+        if ((today.month, today.day) < (birthDate.month, birthDate.day)):
+            years = years - 1
+            return years
 
 def calculate_date(Date):
     Date = Date.replace("/", " ")
@@ -249,15 +251,26 @@ class screendesign():
                                 lastname = lastname.strip()
                                 guestemail = email.get()
                                 guestemail = guestemail.strip()
-                                todayDate = today.get()
-                                todayDate = todayDate.strip()
+                                todaysdate = todaydate()
                                 guestbirthdate = birthdate.get()
-                                guestbirthdate = guestbirthdate.strip()
+                                if (guestbirthdate != ""):
+                                    guestbirthdate = guestbirthdate.strip()
+                                    guestbirthdate = guestbirthdate.replace("/"," ")
+                                    guestbirthdate = guestbirthdate.replace("."," ")
+                                    guestbirthdate = guestbirthdate.split()
+                                    if (len(guestbirthdate[0]) == 1):
+                                        guestbirthdate[0] = "0" + guestbirthdate[0]
+                                    if (len(guestbirthdate[1]) == 1):
+                                        guestbirthdate[1] = "0" + guestbirthdate[1]
+                                    if (len(guestbirthdate[2]) == 2):
+                                        guestbirthdate[2] = "20" + guestbirthdate[2]
+                                else:
+                                    guestbirthdate = ""
                                 query = "INSERT INTO guest VALUES (?,?,?,?,?,?,?,?)"
                                 query2 = "INSERT INTO visits VALUES (?,?,?,?,?,?,?,?,?)"
                                 db.insertguest(db.create_connection(db.data), query, guestID, memberID, firstname, lastname, guestemail, phoneentry, guestbirthdate, calculate_year(str(guestbirthdate)))
-                                db.insertvisits(db.create_connection(db.data), query2, guestID, memberID, firstname, lastname, guestemail, phoneentry, guestbirthdate, calculate_year(str(guestbirthdate)), todayDate)
-                                ttk.Label(root2, text = "                                  Guest Added", font = ("Ariel", 18)).place(height = 40, width = 600, x = 50, y = 280)
+                                db.insertvisits(db.create_connection(db.data), query2, guestID, memberID, firstname, lastname, guestemail, phoneentry, guestbirthdate, calculate_year(str(guestbirthdate)), todaysdate)
+                                ttk.Label(root2, text = "                                  Guest Added", font = ("Ariel", 18)).place(height = 40, width = 600, x = 50, y = 290)
                                 if (go == 1):
                                     ttk.Label(root2).place(height = 365, width = 700, x = 0, y = 35)
                                     ttk.Label(root2, text = "Enter Guest 2:", font = ("Ariel",18)).place(height = 30, width = 350, x = 100, y = 35)
@@ -285,9 +298,7 @@ class screendesign():
                             ttk.Entry(root2, textvariable= phone).place(height = 30, width = 300, x = 300, y = 175)  
                             ttk.Label(root2, text = "Guest Birth Date:").place(height = 30, width = 250, x = 50, y = 210)
                             ttk.Entry(root2, textvariable= birthdate).place(height = 30, width = 300, x = 300, y = 210)  
-                            ttk.Label(root2, text = "Today's Date:").place(height = 30, width = 250, x = 50, y = 245)
-                            ttk.Entry(root2, textvariable= today).place(height = 30, width = 300, x = 300, y = 245) 
-                            ttk.Button(root2, text = "Enter Guest into Database", command = insertguest).place(height = 30, width = 600, x = 50, y = 280)
+                            ttk.Button(root2, text = "Enter Guest into Database", command = insertguest).place(height = 45, width = 600, x = 50, y = 245)
                         
                         global i
                         guestIDlist = []
@@ -435,7 +446,6 @@ class screendesign():
                     membertype = "Year Long"
                 def addmember():
                     global membertype
-                    print(membertype)
                     memberfirstfixed = newMemberFirst.get()
                     memberfirstfixed = memberfirstfixed.strip()
                     memberlastfixed = newMemberLast.get()
@@ -529,42 +539,102 @@ class screendesign():
             
             
         def screen4():
+            def search():
+                global i
+                i = 0
+                guestclear = ttk.Label(canvas)
+                canvas.create_window(340, 155, height = 10000, width = 680, window = guestclear)
+                guestlist = guestname.get()
+                guestlist = guestlist.split()
+                if (len(guestlist) == 1): 
+                    query = "SELECT * from guest WHERE guestFirstName = ?"
+                    allguest = db.read_table_1condition(db.create_connection(db.data), query, (guestlist[0],)) 
+                    ttk.Label(root4, text = "Guest ID:").place(x = 0, y = 70, width = 70, height = 30)
+                    ttk.Label(root4, text = "First Name:").place(x = 65, y = 70, width = 80, height = 30) 
+                    ttk.Label(root4, text = "Last Name:").place(x = 145, y = 70, width = 80, height = 30) 
+                    ttk.Label(root4, text = "Email:").place(x = 225, y = 70, width = 250, height = 30) 
+                    ttk.Label(root4, text = "Phone:").place(x = 455, y = 70, width = 90, height = 30) 
+                    ttk.Label(root4, text = "Birthdate:").place(x = 550, y = 70, width = 80, height = 30) 
+                    ttk.Label(root4, text = "Age:").place(x = 645, y = 70, width = 30, height = 30)    
+                    for guest in allguest:
+                        i += 1
+                        list(guest)
+                        guestIDlabel= ttk.Label(canvas, text = guest[0])
+                        canvas.create_window(35, 155 + i*35, width = 70, height = 30, window = guestIDlabel) 
+                        guestfirstnamelabel= ttk.Label(canvas, text = guest[2])
+                        canvas.create_window(105, 155+ i*35, width = 80, height = 30, window = guestfirstnamelabel) 
+                        guestlastnamelabel= ttk.Label(canvas, text = guest[3])
+                        canvas.create_window(185, 155+ i*35, width = 80, height = 30, window = guestlastnamelabel) 
+                        guestemaillabel= ttk.Label(canvas, text = guest[4])
+                        canvas.create_window(350, 155+ i*35, width = 250, height = 30, window = guestemaillabel) 
+                        guestphonelabel= ttk.Label(canvas, text = guest[5])
+                        canvas.create_window(500, 155+ i*35, width = 90, height = 30, window = guestphonelabel) 
+                        guestbirthdatelabel= ttk.Label(canvas, text = guest[6])
+                        canvas.create_window(590, 155+ i*35, width = 80, height = 30, window = guestbirthdatelabel) 
+                        guestagelabel= ttk.Label(canvas, text = guest[7])
+                        canvas.create_window(660, 155+ i*35, width = 30, height = 30, window = guestagelabel) 
+                elif (allguest == 0):
+                    pass
+                
+                else:
+                    query = "SELECT * FROM guest WHERE (guestFirstName = ? AND guestLastName = ?)"
+                    allguest = db.read_table_2condition(db.create_connection(db.data), query, guestlist[0], guestlist[1])
+                    ttk.Label(root4, text = "Guest ID:").place(x = 0, y = 70, width = 70, height = 30)
+                    ttk.Label(root4, text = "First Name:").place(x = 65, y = 70, width = 80, height = 30) 
+                    ttk.Label(root4, text = "Last Name:").place(x = 145, y = 70, width = 80, height = 30) 
+                    ttk.Label(root4, text = "Email:").place(x = 225, y = 70, width = 250, height = 30) 
+                    ttk.Label(root4, text = "Phone:").place(x = 455, y = 70, width = 90, height = 30) 
+                    ttk.Label(root4, text = "Birthdate:").place(x = 550, y = 70, width = 80, height = 30) 
+                    ttk.Label(root4, text = "Age:").place(x = 645, y = 70, width = 30, height = 30)   
+                    for guest in allguest:
+                        i += 1
+                        list(guest)
+                        guestIDlabel= ttk.Label(canvas, text = guest[0])
+                        canvas.create_window(35, 155 + i*35, width = 70, height = 30, window = guestIDlabel) 
+                        guestfirstnamelabel= ttk.Label(canvas, text = guest[2])
+                        canvas.create_window(105, 155+ i*35, width = 80, height = 30, window = guestfirstnamelabel) 
+                        guestlastnamelabel= ttk.Label(canvas, text = guest[3])
+                        canvas.create_window(185, 155+ i*35, width = 80, height = 30, window = guestlastnamelabel) 
+                        guestemaillabel= ttk.Label(canvas, text = guest[4])
+                        canvas.create_window(350, 155+ i*35, width = 250, height = 30, window = guestemaillabel) 
+                        guestphonelabel= ttk.Label(canvas, text = guest[5])
+                        canvas.create_window(500, 155+ i*35, width = 90, height = 30, window = guestphonelabel) 
+                        guestbirthdatelabel= ttk.Label(canvas, text = guest[6])
+                        canvas.create_window(590, 155+ i*35, width = 80, height = 30, window = guestbirthdatelabel) 
+                        guestagelabel= ttk.Label(canvas, text = guest[7])
+                        canvas.create_window(660, 155+ i*35, width = 30, height = 30, window = guestagelabel) 
+            
             def listall():
                 global i 
                 i = 0 
-                guestID = ttk.Label(canvas, text = "Guest ID:")
-                canvas.create_window(35, 155, width = 70, height = 30, window = guestID)
-                guestfirstname = ttk.Label(canvas, text = "First Name:")
-                canvas.create_window(105, 155, width = 80, height = 30, window = guestfirstname) 
-                guestlastname = ttk.Label(canvas, text = "Last Name:")
-                canvas.create_window(210, 155, width = 80, height = 30, window = guestlastname) 
-                guestemail = ttk.Label(canvas, text = "Email:")
-                canvas.create_window(290, 155, width = 200, height = 30, window = guestemail) 
-                guestphone = ttk.Label(canvas, text = "Phone:")
-                canvas.create_window(490, 155, width = 100, height = 30, window = guestphone) 
-                guestbirthdate = ttk.Label(canvas, text = "Birthdate:")
-                canvas.create_window(590, 155, width = 80, height = 30, window = guestbirthdate) 
-                guestage = ttk.Label(canvas, text = "Age:")
-                canvas.create_window(670, 155, width = 60, height = 30, window = guestage)  
+                guestclear = ttk.Label(canvas)
+                canvas.create_window(340, 155, height = 10000, width = 680, window = guestclear)
+                ttk.Label(root4, text = "Guest ID:").place(x = 0, y = 70, width = 70, height = 30)
+                ttk.Label(root4, text = "First Name:").place(x = 65, y = 70, width = 80, height = 30) 
+                ttk.Label(root4, text = "Last Name:").place(x = 145, y = 70, width = 80, height = 30) 
+                ttk.Label(root4, text = "Email:").place(x = 225, y = 70, width = 250, height = 30) 
+                ttk.Label(root4, text = "Phone:").place(x = 455, y = 70, width = 90, height = 30) 
+                ttk.Label(root4, text = "Birthdate:").place(x = 550, y = 70, width = 80, height = 30) 
+                ttk.Label(root4, text = "Age:").place(x = 645, y = 70, width = 30, height = 30)  
                 query = "SELECT * FROM guest"
                 allguest = db.read_table(db.create_connection(db.data), query)
                 for guest in allguest:
                     i += 1
                     list(guest)
                     guestIDlabel= ttk.Label(canvas, text = guest[0])
-                    canvas.create_window(60, 155 + i*35, width = 100, height = 30, window = guestIDlabel) 
+                    canvas.create_window(35, 155 + i*35, width = 70, height = 30, window = guestIDlabel) 
                     guestfirstnamelabel= ttk.Label(canvas, text = guest[2])
-                    canvas.create_window(130, 155+ i*35, width = 100, height = 30, window = guestfirstnamelabel) 
+                    canvas.create_window(105, 155+ i*35, width = 80, height = 30, window = guestfirstnamelabel) 
                     guestlastnamelabel= ttk.Label(canvas, text = guest[3])
-                    canvas.create_window(230, 155+ i*35, width = 100, height = 30, window = guestlastnamelabel) 
+                    canvas.create_window(185, 155+ i*35, width = 80, height = 30, window = guestlastnamelabel) 
                     guestemaillabel= ttk.Label(canvas, text = guest[4])
-                    canvas.create_window(330, 155+ i*35, width = 100, height = 30, window = guestemaillabel) 
+                    canvas.create_window(350, 155+ i*35, width = 250, height = 30, window = guestemaillabel) 
                     guestphonelabel= ttk.Label(canvas, text = guest[5])
-                    canvas.create_window(460, 155+ i*35, width = 100, height = 30, window = guestphonelabel) 
+                    canvas.create_window(500, 155+ i*35, width = 90, height = 30, window = guestphonelabel) 
                     guestbirthdatelabel= ttk.Label(canvas, text = guest[6])
-                    canvas.create_window(560, 155+ i*35, width = 100, height = 30, window = guestbirthdatelabel) 
+                    canvas.create_window(590, 155+ i*35, width = 80, height = 30, window = guestbirthdatelabel) 
                     guestagelabel= ttk.Label(canvas, text = guest[7])
-                    canvas.create_window(660, 155+ i*35, width = 50, height = 30, window = guestagelabel) 
+                    canvas.create_window(660, 155+ i*35, width = 30, height = 30, window = guestagelabel) 
             def backtomain():
                 root4.destroy()
                 screendesign()
@@ -572,12 +642,12 @@ class screendesign():
             root4 = tk.Tk()
             root4.title("Guest List")
             root4.geometry("700x400")
-            frame=tk.Frame(root4,width=700,height=1000)
+            frame=tk.Frame(root4,width=700,height=10000)
             frame.pack(expand=True, fill=tk.BOTH)
-            canvas=tk.Canvas(frame,width=700,height=3000,scrollregion=(0,70,700,3000))
+            canvas=tk.Canvas(frame,width=700,height=10000,scrollregion=(0,70,700,10000))
             vbar=tk.Scrollbar(canvas,orient=tk.VERTICAL)
             vbar.pack(side=tk.RIGHT,fill=tk.Y)
-            ttk.Label(root4).place(height= 70, width = 680, x = 0, y = 0)
+            ttk.Label(root4).place(height= 100, width = 680, x = 0, y = 0)
             ttk.Label(root4, text = "Guest List", font=("Ariel", 18)).place(height= 30, width = 300, x = 290, y = 0)
             ttk.Button(root4, text = "Exit Program", command = root4.destroy).place(height = 30, width = 100, x = 10, y = 0)
             ttk.Button(root4, text = "Back to Menu", command = backtomain).place(height = 30, width = 100, x = 580, y = 0)
@@ -585,7 +655,7 @@ class screendesign():
             guestname = tk.StringVar()
             ttk.Entry(root4, textvariable = guestname).place(height = 30, width = 270, x = 190, y = 35)
             ttk.Button(root4, text = "List All Guests", command = listall).place(height = 30, width = 100, x = 580, y = 35)
-            ttk.Button(root4, text = "Search").place(height = 30, width = 100, x = 470, y = 35)
+            ttk.Button(root4, text = "Search", command = search).place(height = 30, width = 100, x = 470, y = 35)
             
             vbar.config(command=canvas.yview)
             canvas.config(yscrollcommand=vbar.set)
@@ -593,7 +663,7 @@ class screendesign():
             root4.mainloop()
 
                 
-       def screen5():
+        def screen5():
             def motion(event):
                 global x
                 global y
@@ -613,7 +683,6 @@ class screendesign():
                     global currentmemberID
                     currentmemberID = 0
                     g = 0
-                    print(g)
                     click = 0
                     while (click < (len(uniqueIDs))):
                         if (y <= (135 + (g*35)) and y >= (105 + (g*35))):
@@ -622,36 +691,34 @@ class screendesign():
                         click += 1
                         g += 1
                     initiallabel = ttk.Label(canvas)
-                    canvas.create_window(340, 340 + g*35, height = 400, width = 680,window = initiallabel)
+                    canvas.create_window(340, 340 + g*35, height = 10000, width = 680,window = initiallabel)
                     query = "SELECT * FROM visits WHERE memberID = ?"
                     allguests = db.read_table_1condition(db.create_connection(db.data), query, (currentmemberID,))
-                    print(allguests)
                     gfirst = ttk.Label(canvas, text = "Guest First Name")
-                    canvas.create_window(70, 230 + g*35, height = 30, width = 125, window = gfirst)
+                    canvas.create_window(70, 150 + g*35, height = 30, width = 125, window = gfirst)
                     glast = ttk.Label(canvas, text = "Guest Last Name")
-                    canvas.create_window(220, 230 + g*35, height = 30, width = 125, window = glast)
+                    canvas.create_window(220, 150 + g*35, height = 30, width = 125, window = glast)
                     gbirth = ttk.Label(canvas, text= "Guest Birth Date")
-                    canvas.create_window(370, 230 + g*35, height = 30, width = 125, window = gbirth)
+                    canvas.create_window(370, 150 + g*35, height = 30, width = 125, window = gbirth)
                     gage = ttk.Label(canvas, text= "Guest Age")
-                    canvas.create_window(530, 230 + g*35, height = 30, width = 100, window = gage)
+                    canvas.create_window(530, 150 + g*35, height = 30, width = 100, window = gage)
                     gdate = ttk.Label(canvas, text= "Visit Date")
-                    canvas.create_window(650, 230 + g*35, height = 30, width = 105, window = gdate)
-                    
+                    canvas.create_window(650, 150 + g*35, height = 30, width = 105, window = gdate)
+                    length = 0
                     for guest in allguests:
-                        g += 1
+                        length += 1
                         guestlist = list(guest)
-                        print(guestlist)
                         if (calculate_date(guestlist[8]) > calculate_date(start) and calculate_date(guestlist[8]) < calculate_date(end)): 
                             gfirstlabel = ttk.Label(canvas, text = guestlist[2])
-                            canvas.create_window(70, 250 + g*35, height = 30, width = 125, window = gfirstlabel)
+                            canvas.create_window(70, 185 + length*35, height = 30, width = 125, window = gfirstlabel)
                             glastlabel = ttk.Label(canvas, text = guestlist[3])
-                            canvas.create_window(220, 250 + g*35, height = 30, width = 125, window = glastlabel)
+                            canvas.create_window(220, 185 + length*35, height = 30, width = 125, window = glastlabel)
                             gbirthlabel = ttk.Label(canvas, text = guestlist[6])
-                            canvas.create_window(385, 250 + g*35, height = 30, width = 125, window = gbirthlabel)
+                            canvas.create_window(385, 185 + length*35, height = 30, width = 125, window = gbirthlabel)
                             gagelabel = ttk.Label(canvas, text = guestlist[7])
-                            canvas.create_window(555, 250 + g*35, height = 30, width = 100, window = gagelabel)
+                            canvas.create_window(555, 185 + length*35, height = 30, width = 100, window = gagelabel)
                             gvisitdatelabel = ttk.Label(canvas, text = guestlist[8])
-                            canvas.create_window(650, 250 + g*35, height = 30, width = 105, window = gvisitdatelabel)
+                            canvas.create_window(650, 185 + length*35, height = 30, width = 105, window = gvisitdatelabel)
                     
                             
                     
@@ -668,7 +735,7 @@ class screendesign():
                 root5.bind('<Button-1>', motion)
                 i = 0
                 initiallabel2 = ttk.Label(canvas) 
-                canvas.create_window(0, 140, height = 340, width = 680, window = initiallabel2)
+                canvas.create_window(340, 140, height = 10000, width = 680, window = initiallabel2)
                 today()
                 query = 'SELECT * FROM visits'
                 rows = db.read_table(db.create_connection(db.data), query)
@@ -732,15 +799,15 @@ class screendesign():
                                 
                             remaining = (2 - (visits))
                             memberrem = ttk.Label(canvas, text = str(remaining))
-                            canvas.create_window(550, (140 + i*35), height = 30, width = 120, window = memberrem)
+                            canvas.create_window(610, (140 + i*35), height = 30, width = 120, window = memberrem)
                 
             root.destroy()
             root5 = tk.Tk()
             root5.title("Member Pass Records")
             root5.geometry("700x400")
-            frame=tk.Frame(root5,width=700,height=1000)
+            frame=tk.Frame(root5,width=700,height=1-000)
             frame.pack(expand=True, fill=tk.BOTH)
-            canvas=tk.Canvas(frame,width=700,height=3000,scrollregion=(0,70,700,3000))
+            canvas=tk.Canvas(frame,width=700,height=10000,scrollregion=(0,70,700,10000))
             vbar=tk.Scrollbar(canvas,orient=tk.VERTICAL)
             vbar.pack(side=tk.RIGHT,fill=tk.Y)
             vbar.config(command=canvas.yview)
