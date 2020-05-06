@@ -308,6 +308,8 @@ class screendesign():
                         guestIDlist = []
                         ttk.Label(root2).place(height = 370, width = 700, x = 0, y = i*35 + 175)
                         listguest = guestname.get()
+                        listguest = listguest.title()
+                        print(listguest)
                         listguest = listguest.split()
                         if (len(listguest) == 1): 
                             query = "SELECT guestFirstName, guestLastName, guestID FROM guest WHERE guestFirstName = ?"
@@ -388,6 +390,7 @@ class screendesign():
                 root2.bind('<Button-1>', motion)
                 ttk.Label(root2).place(height = 370, width = 700, x = 0, y = 70)
                 namelist = name.get()
+                namelist = namelist.title()
                 namelist = namelist.split()
                 if (len(namelist) == 1): 
                     query = "SELECT memberFirstName, memberLastName, memberID FROM member WHERE memberFirstName = ?"
@@ -568,6 +571,7 @@ class screendesign():
                 guestclear = ttk.Label(canvas)
                 canvas.create_window(340, 155, height = 10000, width = 680, window = guestclear)
                 guestlist = guestname.get()
+                guestlist = guestlist.title()
                 guestlist = guestlist.split()
                 if (len(guestlist) == 1): 
                     query = "SELECT * from guest WHERE guestFirstName = ?"
