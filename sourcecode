@@ -1,9 +1,6 @@
 #Programmer: Laura Erickson and Ty Regehr
-
 #Program Name: finalProject.py
-
 #Created on: 4/21/2020
-
 #Last updated on: 5/05/2020
 
 #import modules for code, as well as our database creation from the other program
@@ -12,6 +9,7 @@ import tkinter.ttk as ttk
 from PIL import ImageTk, Image
 import database as db
 from datetime import date
+
 
 #initialize values to be used in the code later
 membertype = ""
@@ -40,7 +38,7 @@ def calculate_year(birthDate):
     if (birthDate == ""):
         years = ""
         return years
-    elif (len(birthDate) > 1): 
+    else: 
         birthDate = birthDate.replace("/"," ")
         birthDate = birthDate.split()
         birthDate = date(int(birthDate[2]),int(birthDate[0]),int(birthDate[1]))
@@ -48,7 +46,7 @@ def calculate_year(birthDate):
         years = today.year - birthDate.year
         if ((today.month, today.day) < (birthDate.month, birthDate.day)):
             years = years - 1
-            return years
+        return years
 
 def calculate_date(Date):
     Date = Date.replace("/", " ")
@@ -145,8 +143,8 @@ class screendesign():
                         elif (u >= 2): 
                             go = 0
                             ttk.Label(root2, text = "This member is already out of passes", font = ("Ariel", 18)).place(height = 50, width = 450, x = 160, y = (i*35 + 170))
-                   #continuation of the search
-                   def one():
+                    #continuation of the search
+                    def one():
                         global u
                         global memberID  
                         global currentmonth
@@ -269,6 +267,8 @@ class screendesign():
                                         guestbirthdate[2] = "20" + guestbirthdate[2]
                                 else:
                                     guestbirthdate = ""
+                                    
+                                guestbirthdate = guestbirthdate[0] + "/" + guestbirthdate[1] + "/" + guestbirthdate[2]
                                 query = "INSERT INTO guest VALUES (?,?,?,?,?,?,?,?)"
                                 query2 = "INSERT INTO visits VALUES (?,?,?,?,?,?,?,?,?)"
                                 db.insertguest(db.create_connection(db.data), query, guestID, memberID, firstname, lastname, guestemail, phoneentry, guestbirthdate, calculate_year(str(guestbirthdate)))
@@ -473,7 +473,20 @@ class screendesign():
                     
                     memberbirthdatefixed = newMemberDOB.get()
                     memberbirthdatefixed = memberbirthdatefixed.strip()
-                    memberbirthdatefixed = memberbirthdatefixed.replace("-","/")
+                    if (memberbirthdatefixed != ""):
+                        memberbirthdatefixed = memberbirthdatefixed.replace("-","/")
+                        memberbirthdatefixed = memberbirthdatefixed.replace("/"," ")
+                        memberbirthdatefixed = memberbirthdatefixed.split()
+                        print(memberbirthdatefixed)
+                        if (len(memberbirthdatefixed[0]) == 1):
+                            memberbirthdatefixed[0] = "0" + memberbirthdatefixed[0]
+                        if (len(memberbirthdatefixed[1]) == 1):
+                            memberbirthdatefixed[1] = "0" + memberbirthdatefixed[1]
+                        if (len(memberbirthdatefixed[2]) == 2):
+                            memberbirthdatefixed[2] = "20" + memberbirthdatefixed[2]
+                    else:
+                        memberbirthdatefixed = ""
+                    memberbirthdatefixed = memberbirthdatefixed[0] + "/" + memberbirthdatefixed[1] + "/" + memberbirthdatefixed[2]
                     
                     query2 = "INSERT INTO member VALUES (?,?,?,?,?,?,?,?)"
                     db.insertguest(db.create_connection(db.data), query2, memberIDsfixed, memberfirstfixed, memberlastfixed, memberemailfixed, memberphonefixed, membertype, memberbirthdatefixed, calculate_year(memberbirthdatefixed))
@@ -584,9 +597,6 @@ class screendesign():
                         canvas.create_window(590, 155+ i*35, width = 80, height = 30, window = guestbirthdatelabel) 
                         guestagelabel= ttk.Label(canvas, text = guest[7])
                         canvas.create_window(660, 155+ i*35, width = 30, height = 30, window = guestagelabel) 
-                elif (allguest == 0):
-                    pass
-                
                 else:
                     query = "SELECT * FROM guest WHERE (guestFirstName = ? AND guestLastName = ?)"
                     allguest = db.read_table_2condition(db.create_connection(db.data), query, guestlist[0], guestlist[1])
@@ -880,8 +890,10 @@ class screendesign():
         root.geometry("700x400")  
         
         #path for the company's logo on the main screen
-        path = 'C:/workspace-python/python/final project/resize.png' 
-        image = Image.open(path)
+        
+
+        file = "resize.png"
+        image = Image.open(file)
         img = ImageTk.PhotoImage(image)
         reference = ttk.Label(root, image = img)
         reference.image = img
