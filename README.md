@@ -19,4 +19,6 @@ Laura laid the framework for screen 5.
 
 Laura connected all the other screens to the database, and finished screen 4.
 
-5/5 Ty entered comments to polish the code, and Laura finished bug testing the program. We turned in our project on this day.
+5/5 Ty entered comments to polish the code, and Laura finished bug testing the program. 
+
+5/7 We finished the screen recording and uploaded our project on this day
