@@ -1,7 +1,7 @@
 # Conquer-Project
 Project for Python Class
 
-This is the beginning of our final project log for COS2212, Computer Software Development II.
+This is the log for COS2212, Computer Software Development II.
 
 4/21 Laura added main menu screen and database screen. 
 
