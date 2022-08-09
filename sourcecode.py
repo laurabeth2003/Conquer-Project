@@ -334,8 +334,8 @@ class screendesign():
                                     ttk.Label(root2, text= guestlist[1]).place(height = 30, width = 200, x = 250, y = i*35 + 175)
                                     ttk.Label(root2, text= guestlist[2]).place(height = 30, width = 150, x = 450, y = i*35 + 175)
                                     guestIDlist.append(guestlist[2])
-                                    ttk.Button(root2, text = "Yes", command = yes).place(height = 30, width = 45, x = 600, y = i*35 + 175)
-                                    ttk.Button(root2, text = "No", command = addguest).place(height = 30, width = 45, x = 650, y = i*35 + 175)
+                                    ttk.Button(root2, text = "Yes", command = yes).place(height = 30, width = 100, x = 600, y = i*35 + 175)
+                                    ttk.Button(root2, text = "No", command = addguest).place(height = 30, width = 100, x = 650, y = i*35 + 175)
                                 i -= 1
             
                         else:
@@ -360,8 +360,8 @@ class screendesign():
                                     ttk.Label(root2, text= guestlist[0]).place(height = 30, width = 200, x = 50, y = i*35 + 175)
                                     ttk.Label(root2, text= guestlist[1]).place(height = 30, width = 200, x = 250, y = i*35 + 175)
                                     ttk.Label(root2, text= guestlist[2]).place(height = 30, width = 150, x = 450, y = i*35 + 175)
-                                    ttk.Button(root2, text = "Yes", command = yes).place(height = 30, width = 45, x = 600, y = i*35 + 175)
-                                    ttk.Button(root2, text = "No", command = addguest).place(height = 30, width = 45, x = 650, y = i*35 + 175)
+                                    ttk.Button(root2, text = "Yes", command = yes).place(height = 30, width = 100, x = 600, y = i*35 + 175)
+                                    ttk.Button(root2, text = "No", command = addguest).place(height = 30, width = 100, x = 650, y = i*35 + 175)
                                     guestIDlist.append(guestlist[2])
                                 i -= 1
                     
@@ -406,7 +406,7 @@ class screendesign():
                         ttk.Label(root2, text= rowlist[0]).place(height = 30, width = 200, x = 50, y = (i*35 + 70))
                         ttk.Label(root2, text= rowlist[1]).place(height = 30, width = 200, x = 250, y = (i*35 + 70))
                         ttk.Label(root2, text= rowlist[2]).place(height = 30, width = 150, x = 450, y = (i*35 + 70))
-                        ttk.Button(root2, text = "Yes", command = contin).place(height = 30, width = 45, x = 600, y = (i*35 + 70))
+                        ttk.Button(root2, text = "Yes", command = contin).place(height = 30, width = 100, x = 600, y = (i*35 + 70))
                         memberIDlist.append(rowlist[2])
             
                 else:
@@ -423,16 +423,16 @@ class screendesign():
                         ttk.Label(root2, text= rowlist[0]).place(height = 30, width = 200, x = 50, y = (i*35 + 70))
                         ttk.Label(root2, text= rowlist[1]).place(height = 30, width = 200, x = 250, y = (i*35 + 70))
                         ttk.Label(root2, text= rowlist[2]).place(height = 30, width = 150, x = 450, y = (i*35 + 70))
-                        ttk.Button(root2, text = "Yes", command = contin).place(height = 30, width = 45, x = 600, y = (i*35 + 70))
+                        ttk.Button(root2, text = "Yes", command = contin).place(height = 30, width = 100, x = 600, y = (i*35 + 70))
                         memberIDlist.append(rowlist[2])
             
             #destroys the main menu screen, and initializes the GUI for screen 2
             root.destroy()
             root2 = tk.Tk()
             root2.title("Add Guest Pass")
-            root2.geometry("700x400")
-            ttk.Button(root2, text = "Exit Program", command = root2.destroy).place(height = 30, width = 100, x = 10, y = 0)
-            ttk.Button(root2, text = "Back to Menu", command = backtomain).place(height = 30, width = 100, x = 590, y = 0)
+            root2.geometry("730x420")
+            ttk.Button(root2, text = "Exit Program", command = root2.destroy).place(height = 30, width = 120, x = 10, y = 0)
+            ttk.Button(root2, text = "Back to Menu", command = backtomain).place(height = 30, width = 130, x = 575, y = 0)
             ttk.Label(root2, text = "Add Guest Pass", font=("Ariel", 18)).place(height= 30, width = 300, x = 265, y = 0)
             ttk.Label(root2, text = "Enter member name:", font = ("Ariel", 14)).place(height = 30, width = 200, x = 10, y = 35)
             name = tk.StringVar()
@@ -502,7 +502,7 @@ class screendesign():
                 query = "SELECT memberID FROM member WHERE memberID = ?"
                 members = db.read_table_1condition(db.create_connection(db.data), query, (memberIDfixed,))
                 system = 0 
-                if (len(members) ==  0):
+                if (members == None or len(members) == 0):
                     system += 1
 
                 #determines if the member has already been added
@@ -523,11 +523,12 @@ class screendesign():
                     ttk.Label(root3, text="Membership ID:").place(height = 30, width = 200, x = 10, y = 140)
                     newMemberID = tk.StringVar()
                     ttk.Entry(root3, textvariable = newMemberID).place(height = 30, width = 300, x = 220, y = 140)
-         
+                    
                     ttk.Label(root3, text="Membership Type:").place(height = 30, width = 200, x = 10, y = 175)
-                    ttk.Button(root3, text="Month-to-Month", command = month).place(height = 30, width = 120, x = 220, y = 175)
-                    ttk.Button(root3, text="Year Long", command = year).place(height = 30, width = 120, x = 350, y = 175)
-                    ttk.Button(root3, text="Team Member", command = teammember).place(height = 30, width = 120, x = 480, y = 175)  
+                    ttk.Button(root3, text="Month", command = month).place(height = 30, width = 120, x = 220, y = 175)
+                    
+                    ttk.Button(root3, text="Year", command = year).place(height = 30, width = 120, x = 350, y = 175)
+                    ttk.Button(root3, text="Team", command = teammember).place(height = 30, width = 120, x = 480, y = 175)  
          
                     ttk.Label(root3, text="Phone:").place(height = 30, width = 200, x = 10, y = 210)
                     newMemberPhone = tk.StringVar()
@@ -553,8 +554,8 @@ class screendesign():
             root3.title("Add Member")
             root3.geometry("700x400")   
             
-            ttk.Button(root3, text = "Exit Program", command = root3.destroy).place(height = 30, width = 100, x = 10, y = 0)
-            ttk.Button(root3, text = "Back to Menu", command = backtomain).place(height = 30, width = 100, x = 590, y = 0)
+            ttk.Button(root3, text = "Exit Program", command = root3.destroy).place(height = 30, width = 120, x = 10, y = 0)
+            ttk.Button(root3, text = "Back to Menu", command = backtomain).place(height = 30, width = 130, x = 575, y = 0)
             ttk.Label(root3, text = "Add Member", font=("Ariel", 18)).place(height= 30, width = 300, x = 265, y = 0)
             ttk.Label(root3, text="Member ID:", font = ("Ariel", 15)).place(height = 30, width = 150, x = 10, y = 35)
             
@@ -669,7 +670,7 @@ class screendesign():
             root.destroy()
             root4 = tk.Tk()
             root4.title("Guest List")
-            root4.geometry("700x400")
+            root4.geometry("730x420")
             frame=tk.Frame(root4,width=700,height=10000)
             frame.pack(expand=True, fill=tk.BOTH)
             canvas=tk.Canvas(frame,width=700,height=10000,scrollregion=(0,70,700,10000))
@@ -677,12 +678,12 @@ class screendesign():
             vbar.pack(side=tk.RIGHT,fill=tk.Y)
             ttk.Label(root4).place(height= 100, width = 680, x = 0, y = 0)
             ttk.Label(root4, text = "Guest List", font=("Ariel", 18)).place(height= 30, width = 300, x = 290, y = 0)
-            ttk.Button(root4, text = "Exit Program", command = root4.destroy).place(height = 30, width = 100, x = 10, y = 0)
-            ttk.Button(root4, text = "Back to Menu", command = backtomain).place(height = 30, width = 100, x = 580, y = 0)
+            ttk.Button(root4, text = "Exit Program", command = root4.destroy).place(height = 30, width = 120, x = 10, y = 0)
+            ttk.Button(root4, text = "Back to Menu", command = backtomain).place(height = 30, width = 130, x = 575, y = 0)
             ttk.Label(root4, text = "Enter Guest Name:", font = ("Ariel",14)).place(height = 30, width = 180, x = 10, y = 35)
             guestname = tk.StringVar()
             ttk.Entry(root4, textvariable = guestname).place(height = 30, width = 270, x = 190, y = 35)
-            ttk.Button(root4, text = "List All Guests", command = listall).place(height = 30, width = 100, x = 580, y = 35)
+            ttk.Button(root4, text = "List All Guests", command = listall).place(height = 30, width = 120, x = 580, y = 35)
             ttk.Button(root4, text = "Search", command = search).place(height = 30, width = 100, x = 470, y = 35)
             
             vbar.config(command=canvas.yview)
@@ -873,8 +874,8 @@ class screendesign():
             
             ttk.Label(root5).place(height= 70, width = 680, x = 0, y = 0)
             ttk.Label(root5, text = "Member Pass Records", font=("Ariel", 18)).place(height= 30, width = 300, x = 240, y = 0)
-            ttk.Button(root5, text = "Exit Program", command = root5.destroy).place(height = 30, width = 100, x = 10, y = 0)
-            ttk.Button(root5, text = "Back to Menu", command = backtomain).place(height = 30, width = 100, x = 580, y = 0)
+            ttk.Button(root5, text = "Exit Program", command = root5.destroy).place(height = 30, width = 120, x = 10, y = 0)
+            ttk.Button(root5, text = "Back to Menu", command = backtomain).place(height = 30, width = 130, x = 550, y = 0)
             ttk.Label(root5, text = "Records from:", font = ("Ariel", 16)).place(height = 30, width = 150, x = 10, y = 35)
             ttk.Label(root5, text = "Start Date:").place(height = 30, width = 70, x = 160, y = 35)
             ttk.Label(root5, text = "End Date:").place(height = 30, width = 70, x = 350, y = 35)
@@ -891,18 +892,19 @@ class screendesign():
         #sets up the main menu
         root = tk.Tk()
         root.title("Guest Pass Program")
-        root.geometry("700x400")  
+        root.geometry("730x420")  
         
         #path for the company's logo on the main screen
         
 
-        file = "resize.png"
+        file = "conquer.png"
         image = Image.open(file)
+        image = image.resize((400,110))
         img = ImageTk.PhotoImage(image)
         reference = ttk.Label(root, image = img)
         reference.image = img
-        reference.place(x = 95, y = 35)
-        ttk.Label(root, text = "Guest Pass Program", font=("Ariel", 22)).place(height = 40, width = 300, x = 210, y = 145)
+        reference.place(x = 130, y = 25)
+        ttk.Label(root, text = "Guest Pass Program", font=("Ariel", 22)).place(height = 40, width = 300, x = 240, y = 145)
         ttk.Button(root, text="Add Guest Pass", command = screen2).place(height = 30, width = 350, x = 165, y = 190)
         ttk.Button(root, text="Add Member", command = screen3).place(height = 30, width = 350, x = 165, y = 225)
         ttk.Button(root, text="Guest List", command = screen4).place(height = 30, width = 350, x = 165, y = 260)
